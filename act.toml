@@ -1,0 +1,14 @@
+[std]
+name = "pdf-inspector"
+
+# Read-only by design: the component only ever opens a PDF for reading. Declaring
+# `ro` here caps every grant — no policy can give this component write access.
+# `wasi:http` and `wasi:sockets` are deliberately absent, so they are denied
+# unconditionally: a malformed PDF that corrupts the parser still cannot reach
+# the network. Invocations that pass `data` instead of `path` need no grant.
+[std.capabilities."wasi:filesystem"]
+description = "Read PDF files from disk when a `path` source is used. Never written to."
+
+[[std.capabilities."wasi:filesystem".allow]]
+path = "**"
+mode = "ro"

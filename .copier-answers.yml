@@ -1,0 +1,7 @@
+_commit: 0.11.0
+_src_path: ../templates/act-template-rust
+component_ref: actpkg.dev/library/pdf-inspector
+description: Classify PDFs and extract text and Markdown without OCR
+needs_filesystem: true
+needs_http: false
+project_name: pdf-inspector

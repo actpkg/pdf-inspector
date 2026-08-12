@@ -1,0 +1,21 @@
+[package]
+name = "component-pdf-inspector"
+description = "Classify PDFs and extract text and Markdown without OCR"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+act-sdk = "0.14"
+pdf-inspector = "0.1.7"
+serde = { version = "1", features = ["derive"] }
+schemars = "1"
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+strip = true
+opt-level = "z"
+panic = "abort"
+
+[lib]
+crate-type = ["cdylib"]

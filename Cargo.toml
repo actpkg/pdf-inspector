@@ -1,12 +1,12 @@
 [package]
 name = "component-pdf-inspector"
 description = "Classify PDFs and extract text and Markdown without OCR"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 
 [dependencies]
 act-sdk = "0.14"
-pdf-inspector = "0.1.7"
+pdf-inspector = "1.25.0"
 serde = { version = "1", features = ["derive"] }
 schemars = "1"
 

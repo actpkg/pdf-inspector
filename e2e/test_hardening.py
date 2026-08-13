@@ -30,12 +30,15 @@ async def test_rejects_with_a_specific_message(client, pdf_bytes, expect_error, 
 
 
 @pytest.mark.parametrize("tool", ["classify", "to_markdown"])
-async def test_cyclic_page_tree_terminates(client, pdf_bytes, tool):
+async def test_cyclic_page_tree_terminates(client, pdf_bytes, expect_error, tool):
     # A self-referential page tree — object 2 lists itself as its own kid.
     # The parser must terminate rather than recurse until it exhausts the
-    # stack.
-    result = await client.call_tool(tool, {"data": pdf_bytes("cyclic.pdf")})
-    assert result.structured_content["page_count"] == 0
+    # stack. Since pdf-inspector 1.x a tree with no reachable page is refused
+    # as malformed instead of read as an empty document.
+    await expect_error(
+        client, tool, {"data": pdf_bytes("cyclic.pdf")},
+        "std:invalid-args", contains="no readable pages",
+    )
 
 
 # ── Argument validation ──────────────────────────────────────────────

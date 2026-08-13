@@ -1,0 +1,18 @@
+[package]
+name = "e2e-pdf-inspector"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+# Detach from any outer workspace this component may sit in.
+[workspace]
+
+[dev-dependencies]
+rmcp = { version = "3.5", features = ["client", "transport-child-process"] }
+# No `net`: this component touches no network (wasi:http/sockets are absent
+# from its ceiling), so the harness binds no stub server. `base64` is already
+# in the tree transitively (via rmcp); the tests use it to build the
+# `{"$bytes": "<base64>"}` envelope for the fixture PDFs.
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "process", "io-util", "sync", "time"] }
+serde_json = "1"
+base64 = "0.23"
